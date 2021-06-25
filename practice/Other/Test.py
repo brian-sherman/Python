@@ -1,6 +1,0 @@
-print("Git-Test!")
-print("push-test")
-print("push-test2")
-print("push-test3")
-print("push-test4")
-print("push-test5")
