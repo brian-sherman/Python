@@ -4,8 +4,7 @@ The system allows a rider to reserve a place in line without actually having to 
 The rider simply enters a name into a program to reserve a place. 
 Riders that purchase a VIP pass get to skip past the common riders up to the last VIP rider in line. 
 VIPs board the ride first. 
-(Considering the average wait time for a Disneyland ride is about 45 minutes, 
-this might be a useful program.) 
+(Considering the average wait time for a Disneyland ride is about 45 minutes, this might be a useful program.) 
 For this system, an employee manually selects when the ride is dispatched 
 (thus removing the next riders from the front of the line).
 
@@ -26,29 +25,47 @@ menu = ('(1) Reserve place in line.\n'  # Add rider to line
         '(2) Reserve place in VIP line.\n'  # Add VIP
         '(3) Dispatch riders.\n'  # Dispatch next ride car
         '(4) Print riders.\n'
-        '(5) Exit.\n\n')
+        '(5) Get position.\n'
+        '(6) Remove a rider.\n'
+        '(7) Exit.\n\n')
 
 user_input = input(menu).strip().lower()
 
-while user_input != '5':
+while user_input != '7':
     if user_input == '1':  # Add rider 
         name = input('Enter name:').strip().lower()
         print(name)
         line.append(name)
 
     elif user_input == '2':  # Add VIP
-        print('FIXME: Add new VIP')
-        # Add new rider behind last VIP in line
+        name = input('Enter name:').strip().lower()
+        print(name)
+        line.insert(num_vips, name) # Add new rider behind last VIP in line
+        num_vips += 1
         # Hint: Insert the VIP into the line at position num_vips.
         #Don't forget to increment num_vips.
 
     elif user_input == '3':  # Dispatch ride
-        print('FIXME: Remove riders from the front of the line.')
+        del line[0:3]
+        if num_vips > 3:
+            num_vips -= 3
+        else:
+            num_vips = 0
         # Remove last riders_per_ride from front of line.
         # Don't forget to decrease num_vips, if necessary.
 
     elif user_input == '4':  # Print riders waiting in line
         print('%d person(s) waiting:' % len(line), line)
+
+    elif user_input == '5':
+        name = input('Enter name:').strip().lower()
+        position = line.index(name)
+        print('You are number %d in line' % (position))
+
+    elif user_input == '6':
+        name = input('Enter name:').strip().lower()
+        line.remove(name)
+        print('%s has been removed' % (name))
 
     else:
         print('Unknown menu option')
