@@ -5,7 +5,7 @@ from datetime import date
 
 original_stdout = sys.stdout
 today = date.today()
-yesterday = yesterday = today - timedelta(days=1)
+yesterday = today - timedelta(days=1)
 yesterday = yesterday.strftime('%Y-%m-%d')
 print(yesterday)
 
