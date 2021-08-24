@@ -15,7 +15,7 @@ import datetime
 
 def currentDate(x):
     seconds = datetime.timedelta(days=x).total_seconds()
-    print('The total number of seconds is', seconds)
+    print('The total number of seconds is %s.' % seconds)
     
  
 currentDate(4) #expected outcome: The total number of seconds is 345600.0.

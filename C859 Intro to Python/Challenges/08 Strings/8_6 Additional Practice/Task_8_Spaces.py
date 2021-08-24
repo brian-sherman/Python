@@ -1,8 +1,8 @@
 # Complete the function to remove trailing spaces from the first string
 # and leading spaces from the second string and return the combined strings
 def removeSpaces(string1, string2):
-    string1 = string1.strip()
-    string2 = string2.strip()
+    string1 = string1.rstrip()
+    string2 = string2.lstrip()
     return string1 + string2
     
 # expected output: WGU Rocks-You know it!
