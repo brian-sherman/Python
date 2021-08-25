@@ -7,17 +7,20 @@ original_stdout = sys.stdout
 today = date.today()
 yesterday = today - timedelta(days=1)
 yesterday = yesterday.strftime('%Y-%m-%d')
-print(yesterday)
 
-with open("C:\\Filepath\\Systems.json", "r") as f1:
-    data = json.load(f1)
+systems_path = "C:\\Filepath\\Systems.json"
+inspectors_path = "C:\\Filepath\\Inspectors.json"
+qa_path = ("C:\\Filepath\\Systems-Report-%s.txt" % (yesterday))
 
-with open("C:\\Filepath\\Inspectors.json", "r") as f2:
-    data2 = json.load(f2)
+with open(systems_path, "r") as f1:
+    systems_data = json.load(f1)
 
-for system in data:
+with open(inspectors_path, "r") as f2:
+    inspectors_data = json.load(f2)
+
+for system in systems_data:
     if system["CreatedOn"][0:10] == yesterday:
-        with open("C:\\Filepath\\Systems-Report-%s.txt" % (yesterday), "a+") as f3:
+        with open(qa_path, "a+") as f3:
             sys.stdout = f3
             system_environment_name = system["Environment"]["Name"]
             system_launchpoint_alias = system["Launchpoint"]["Alias"]
@@ -26,7 +29,7 @@ for system in data:
             print("Alias: " , system_launchpoint_alias)
             print("Name: ", system["Name"])
             print("Created On: ", system["CreatedOn"])
-            for inspector in data2:
+            for inspector in inspectors_data:
                 try:
                     if system_environment_name == inspector["Environment"]["Name"] and system_launchpoint_alias == inspector["Alias"]:
                         if "UpdatedBy" in inspector.keys():
@@ -39,3 +42,5 @@ for system in data:
                     continue     
             print()
             sys.stdout = original_stdout
+
+print("Report completed for ", yesterday)
