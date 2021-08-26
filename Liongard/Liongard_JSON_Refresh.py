@@ -5,15 +5,16 @@ import json
 access_id = '****************'
 secret_key = '**********************************'
 
-id_secret = access_id + ':' + secret_key
-enc_id_secret = base64.b64encode(id_secret.encode())
+def get_header(id, secret):
+    id_secret = id + ':' + secret
+    enc_id_secret = base64.b64encode(id_secret.encode())
+    url_header = {
+        "X-ROAR-API-KEY":enc_id_secret,
+    }
+    return url_header
 
-url_headers = {
-    "X-ROAR-API-KEY":enc_id_secret,
-}
-
-def get_data(url, path):
-    response = requests.get(url, headers=url_headers)
+def get_data(url, path, header):
+    response = requests.get(url, headers=header)
     json_response = json.loads(response.text)
     with open(path, "w+") as f:
         f.write(json.dumps(json_response, indent=4, sort_keys=True))
@@ -26,6 +27,8 @@ systems_path = "C:\\Filepath\\Systems.json"
 inspectors_path = "C:\\Filepath\\Inspectors.json"
 agents_path = "C:\\Filepath\\Agents.json"
 
-get_data(systems_url, systems_path)
-get_data(inspectors_url, inspectors_path)
-get_data(agents_url, agents_path)
+header = get_header(access_id, secret_key)
+
+get_data(systems_url, systems_path, header)
+get_data(inspectors_url, inspectors_path, header)
+get_data(agents_url, agents_path, header)
